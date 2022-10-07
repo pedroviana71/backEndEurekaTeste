@@ -1,16 +1,32 @@
 const express = require("express");
+const redis = require("redis");
 const app = express();
-const axios = require("axios");
-require("dotenv").config();
+const client = redis.createClient();
 
-const port = process.env.PORT || 3001;
+const axios = require("axios");
+
+var cors = require("cors");
+
+const port = 3001;
+
+app.use(cors());
 
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  const { cep } = req.body;
-  console.log(cep);
+  const { cep } = req.query;
   try {
+    client
+      .connect()
+      .then(() => {
+        console.log("Connected to Redis");
+        client.set("visits", "550");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    const teste = await client.get("visits");
+    console.log(teste);
     const data = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
     return res.json(data.data);
   } catch (error) {
@@ -19,4 +35,4 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));
