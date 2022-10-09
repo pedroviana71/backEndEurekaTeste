@@ -1,16 +1,16 @@
 const express = require("express");
 const app = express();
-const router = require("./routes/cepRouter");
-var cors = require("cors");
+const cors = require("cors");
+const router = require("./routes");
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api", router);
 
-// app.use("/", (req, res) => {
-//   res.send("API is working");
-// });
+app.use("/", (req, res) => {
+  res.send("API is working");
+});
 
 const port = process.env.PORT || 3001;
 
