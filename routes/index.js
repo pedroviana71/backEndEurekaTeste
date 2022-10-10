@@ -23,7 +23,7 @@ router.get("/:cep", async (req, res) => {
     }
 
     const address = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-    await client.set(cep, JSON.stringify(address.data));
+    await client.setEx(cep, 3600, JSON.stringify(address.data));
     return res.json(address.data);
   } catch (error) {
     console.log(error);

@@ -4,9 +4,7 @@ O backend faz requisições na API ViaCEP. Tem a
 implementação do cache utilizando o Redis. Também
 tem a implementação de testes.
 
-Por simplicidade decidi fazer testes assincronos sem mocks.
-Optei por deixar o redis sem tempo de expiração pois CEP é
-um tipo de dado que raramente vai se mudar. As estruturas de
+Por simplicidade decidi fazer testes assincronos sem mocks. As estruturas de
 pastas tentei deixar o mais simples possível pelo escopo do projeto
 ser pequeno.
 
